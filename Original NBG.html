@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Basenumber</title>
+</head>
+
+<body>
+  <div class=container>
+    <h1>Baseball Game</h1>
+    <form id="form">
+      <input type="text" id="input" autocomplete="off">
+      <button>Check</button>
+    </form>
+  </div>
+  <div class="logs"></div>
+
+  <script>
+    const $form = document.querySelector('#form')
+    const $input = document.querySelector('#input')
+    const $logs = document.querySelector('.logs')
+
+    const numbers = [];
+    for (let i = 0; i < 9; i++) {
+      numbers.push(i + 1);
+    }
+    const answer = [];
+    for (let i = 0; i < 4; i++) {
+      const index = Math.floor(Math.random() * numbers.length);
+      answer.push(numbers[index]);
+      numbers.splice(index, 1);
+    }
+    console.log(answer);
+
+    const tries = [];
+
+    function checkInPut(input) {
+      if (input.length !== 4) { //4자리 숫자인지
+        return alert('Put 4 numbers');
+      }
+      if (new Set(input).size !== 4) { // 중복이 있는지
+        return alert('Put 4 different numbers');
+      }
+      if (tries.includes(input)) {
+        return alert("You've already tried it")
+      }
+      return true;
+    };
+    let out = 0;
+    $form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = $input.value;
+      $input.value = '';
+      if (!checkInPut(value)) {
+        return;
+      };
+      if (answer.join('') === value) {
+        $logs.textContent = 'HomeRun!';
+        return;
+      }
+      if (tries.length >= 9) {
+        const message = document.createTextNode(`Failed! The answer is ${answer.join('')}`);
+        $logs.appendChild(message);
+        return;
+      }
+      //Strike, Ball Check
+      let strike = 0;
+      let ball = 0;
+      // answer : 3146 / value : 1243
+      for (let i = 0; i < answer.length; i++) {
+        const index = value.indexOf(answer[i]);
+        if (index > -1) {
+          if (index === i) {
+            strike += 1;
+          } else {
+            ball += 1;
+          }
+        }
+      }
+      // Out Check
+      if (strike === 0 && ball === 0) {
+        out += 1;
+        $logs.append(`${value}: ${out} Out`, document.createElement('br'));
+      } else {
+        $logs.append(`${value}: ${strike} Strike ${ball} Ball`, document.createElement('br'));
+      };
+      // 3out check
+      if (out === 3) {
+        const message = document.createTextNode(`Failed! The answer is ${answer.join('')}`);
+        $logs.appendChild(message);
+        return;
+      };
+      tries.push(value);
+    });
+  </script>
+</body>
+
+</html>
