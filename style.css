@@ -7,14 +7,17 @@
 body{
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 50vh;
+    height: 100vh;
     text-align: center;
     margin: 0;
     background: url('https://cdn.pixabay.com/photo/2012/04/05/01/45/baseball-25761_960_720.png') no-repeat center fixed;
 }
+.container{
+    height: 400px;
+    position: absolute;
+    top: 12%;
+}
 #form{
-    /* border: 1px solid black; */
     position: relative;
 }
 #input{
@@ -27,6 +30,14 @@ body{
     margin-bottom: 20px;
     font-size: 20px;
 }
+#input::placeholder{
+    transition: 0.3s;
+    font-style: italic;
+}
+#input:focus::placeholder{
+    opacity: 0;
+    visibility: hidden;
+}
 button{
     display: block;
     position: absolute;
@@ -37,15 +48,14 @@ button{
     font-size: 24px;
     border-radius: 40%;
     width: 100px;
-    border: 1px solid #ddd;
+    border: none;
     cursor: pointer;
     transition: 0.2s;
     background-color: transparent;
 }
 button:hover{
-    /* background-color: rgba(162, 186, 11, 0.768); */
     color: rgb(253, 3, 3);
-    font-size: 30px;
+    font-size: 40px;
 }
 .logs {
     position: absolute;
