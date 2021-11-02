@@ -19,9 +19,10 @@
   <div class="logs"></div>
 
   <script>
-    const $form = document.querySelector('#form')
-    const $input = document.querySelector('#input')
-    const $logs = document.querySelector('.logs')
+   const $form = document.querySelector('#form');
+    const $input = document.querySelector('#input');
+    const $logs = document.querySelector('.logs');
+    const $logsAnswer = document.querySelector('.logs-answer');
 
     const numbers = [];
     for (let i = 0; i < 10; i++) {
@@ -58,6 +59,14 @@
       return true;
     };
     let out = 0;
+    const defeated = function(){
+      const message = document.createTextNode(`Failed! The answer is `);
+        const answerJoin = document.createTextNode(`${answer.join('')}`);
+        $logs.appendChild(message);
+        $logsAnswer.appendChild(answerJoin);
+        $logsAnswer.style.color = "red";
+        return;
+    }
     $form.addEventListener('submit', (event) => {
       event.preventDefault();
       const value = $input.value;
@@ -70,9 +79,7 @@
         return;
       }
       if (tries.length >= 9) {
-        const message = document.createTextNode(`Failed! The answer is ${answer.join('')}`);
-        $logs.appendChild(message);
-        return;
+        defeated();
       }
       //Strike, Ball Check
       let strike = 0;
@@ -97,9 +104,7 @@
       };
       // 3out check
       if (out === 3) {
-        const message = document.createTextNode(`Failed! The answer is ${answer.join('')}`);
-        $logs.appendChild(message);
-        return;
+        defeated();
       };
       tries.push(value);
     });
