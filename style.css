@@ -58,9 +58,19 @@ button:hover{
     font-size: 40px;
 }
 .logs {
+    /* border: 1px solid black; */
     position: absolute;
     width: 300px;
     height: 10px;
     top: 48%;
     font-size: 24px;
+}
+.logs-answer{
+    /* border: 1px solid red; */
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+    top: 150px;
+    font-size: 36px;
+    font-weight: bold;
 }
